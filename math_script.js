@@ -4,7 +4,12 @@ const x1Div = document.getElementById('x1');
 const x2Div = document.getElementById('x2');
 
 
-
+function clearOutPut() {
+  const ids = ['solution','x1','x2']
+  for (let i = 0; i < ids.length; i++) {
+    document.getElementById(ids[i]).innerText = '';
+  }
+}
 function renderSolution(a,b,c,sign,index,root) {
   return  `
   <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -41,7 +46,7 @@ solveButton.addEventListener('click', () => {
   const a = parseFloat(document.getElementById('a').value);
   const b = parseFloat(document.getElementById('b').value);
   const c = parseFloat(document.getElementById('c').value);
-
+  clearOutPut();
   if (isNaN(a) || isNaN(b) || isNaN(c)) {
     solutionDiv.innerText = 'Please enter valid numbers for a, b, and c.';
     return;
