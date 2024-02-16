@@ -1,0 +1,36 @@
+name: Color Choice
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Choose a color
+        uses: actions/core@v3
+        id: color_choice
+        with:
+          choices: |
+            Red
+            Green
+            Blue
+          default: 'Blue'
+          prompt: Select your desired color:
+
+      - name: Print chosen color
+        run: |
+          echo "You chose: ${{ steps.color_choice.outputs.result }}"
+
+      - name: Conditional step based on color
+        run: |
+          if [[ ${{ steps.color_choice.outputs.result }} == "Red" ]]; then
+            echo "Red team assemble!"
+          elif [[ ${{ steps.color_choice.outputs.result }} == "Green" ]]; then
+            echo "Go green!"
+          else
+            echo "Feeling blue?"
+          fi
+
