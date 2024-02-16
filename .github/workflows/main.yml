@@ -1,0 +1,45 @@
+name: Color Choice
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    inputs:
+      color: {
+        default: 'Blue',
+        description: 'Your desired color',
+        required: true,
+        options: 'Red,Green,Blue'
+      }
+    steps:
+      - uses: actions/checkout@v3
+      - name: Choose a color (from UI)
+        uses: actions/core@v3
+        id: color_choice
+        with:
+          input: ${{ inputs.color }}
+          prompt: Select your desired color:
+
+      - name: Print chosen color
+        run: |
+          echo "You chose: ${{ inputs.color }}"
+
+      - name: Conditional step based on color
+        run: |
+          if [[ ${{ inputs.color }} == "Red" ]]; then
+            echo "Red team assemble!"
+          elif [[ ${{ inputs.color }} == "Green" ]]; then
+            echo "Go green!"
+          else
+            echo "Feeling blue?"
+          fi
+
+env:
+  jobs.build.env:
+    dispatch_inputs:
+      color:
+        label: 'Select your color:'
